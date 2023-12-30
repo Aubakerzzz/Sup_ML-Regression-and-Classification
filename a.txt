@@ -1,0 +1,145 @@
+Linear Regression:
+	Terminologies:
+		m-> Total Number of Training Examples
+		x-> Input variable
+		y-> Output variable or Target Variable
+		(x,y)-> Single Training Example
+		Not Exp just representing example number -> (x^(i),y^(i))-> ith Traning Example
+	x 	-> 	f     ->	Y hat
+	feature 	model		estimated y hat
+	fw,b (x) = wx + b
+		or
+	Univariated Linear Regression f (x) = a + bx
+	Model: fw,b (x) = wx + b where w and b are parameters/coefficients/weights
+	when w = 0; get constant value ofc as b is constant
+	Cost Function Formula: Squared Error Cost Function
+		(Y hat - Y)^2 => estimated - targeted
+		What if we have to find error for all the Training examples
+			For Linear regression or any other functions : J(w,b) =  1/ 2m sumof (Y^(i) hat - Y^(i))^2 
+					or
+			J(w,b) =  1/ 2m sumof (fw,b (x) - Y^(i))^2 
+		Lower Cost Function get Better Answer
+	Gradient descent Alogrithm For choosing best value of parameters known as w and b	:
+	Gradient descent is an algorithm for finding values of parameters w and b that minimize the cost function J:
+		1) w = w - alpha {sigma/sigma(w)[j(w, b)]}
+		Aplha -> Learning Rate
+		Derivative of Cost Function ->{sigma/sigma(w)[j(w, b)]}
+		2) b = b - alpha {sigma/sigma(b)[j(w, b)]}
+		Repeat these 2 steps till convergence
+		Use new values of w and b which we calulate in the last iteration and save it in variable so that when in next iteration we can use the 
+		update values 
+		Repeat:
+			temp_w = ......
+			temp_b = ......
+			w = temp_w
+			b = temp_b 
+		Until:
+			Convergence
+		Gradient descent intuition
+			w = 	w - aplha ( +ve slope ) -> Decreasing the w
+			w =  	w - aplha ( -ve ) -> Increasing the w 
+		Learning Rate -> Aplha:
+			if aplha-> too small
+				Gradient Descent maybe slow
+			if aplha-> too large
+				Taking huge step and miss the minimum
+				Overshoot, never reach minimum
+			if it approach to local mimimun then doing more iteration will never change the parameters as slope become zero and w = w - aplha (slope = 0); result in w = w
+			Can reah local minimum with fixed Learning Rate:
+				yes as derivative become closer to zero as slope = 0 closer to local minimum
+		Batch Gradient Descent:
+			Each step of Gradient Descent  uses all the training examples
+Multiple Linear Regression:
+	Multiple Features/Input variables -> x
+	Only 1 output estimated variable ( y hat)
+	Vectorization:
+		w = [w1, w2, w3, w4]
+		x = [x1, x2, x3, x4] 
+		f w,b (x) = ( (w . x) + b ) 
+		f  = np.dot (w,x) + b
+	Gradient Descent For Multi Linear:
+		wn = wn - aplha ( 1 / m sumof  ( f (w (vector), b) ( Xi - yi) ) xni
+		b = b - aplha ( 1 / m sumof  ( f (w (vector), b) ( Xi - yi) )
+	Alternative to Gradient Descent:
+		Normal Equation:
+			- only for Linear regression
+			- Solve for w and b, without iteration
+			- Doesn't Generalized to other  learning algorithms
+			- Slow when number of Features > 10,000
+			- used in ML lib that implement linear regression
+Feature scaling:
+	-Z-Score Normalization
+	-outside Range ( too large /too small ) ? 
+		Rescaling 
+	- valid step used during feature scaling? 
+		Divide each value by the maximum value for that feature
+Checking gradient descent for convergence:
+	objective: min cost fun
+	As number of iteration increases , cost fun decreasing , and when cost function remain constant (or no more decreasing) means that the gradient descent is coverged.
+Automatic convergence test.
+	Here is the Greek alphabet epsilon. Let's let epsilon be a variable representing a small number, such as 0.001 or 10^-3. If the cost J decreases by less than this 
+	number epsilon on one iteration, then you're likely on this flattened part of the curve that you see on the left and you can declare convergence. Remember, convergence, 
+	hopefully in the case that you found parameters w and b that are close to the minimum possible value of J. 
+Choosing the learning rate:
+	-If GD is increasing then dec vice versa which means that code is not efficient or learning rate is too large 
+	Fix:
+		- Small Aplha
+	 if I wrote my code so that w_1 gets updated as w_1 plus Alpha times this derivative term, this could result in the cost consistently increasing at each iteration. 
+	 This is because having the derivative term moves your cost J further from the global minimum instead of closer. So remember, you want to use in minus sign, so the code 
+	 should be updated w_1 updated by w_1 minus Alpha times the derivative term.
+		w1 = w1 - alpha * d1
+	-Small value of Aplha Cost function should Decrease on every iteration
+		- but takes alot of iteration to convert GD
+	-if the cost function is increasing, we know that gradient descent is diverging, so we need a lower learning rate. 
+Feature Engineering:
+	
+Polynomial Regression:
+	
+Classification: 
+	Yes/ No, may be more then 2 options ( Multi- Classificationm )
+		if f(w,b) >= 0.5 -> Yhat is 1
+		if f(w,b) < 0.5 -> Yhat is 0
+
+Logistic Regression: 
+	-Work on Discrete Data
+	- if z is very large -> infinity then g(z) is zero
+	Decision Boundry:
+		when z >= 0 then g(z) >= 0.5
+Cost Function and Loss Function For Logistic Regression:
+	
+
+Gradient Descent Implementation For Logistic Regression:
+	
+
+Cost function with regularization:
+	- in regularization we added lambda /2m sumof (wj^2) to cost function J (w,b)
+ 	- Keep wj small
+	- lambda balance both goals 
+	- if lambda is 10^10 then it under fits; F(x) = b
+	- so lmabda shouldn't be too large and too small 
+Regularized linear regression:
+Regularized logistic regression
+
+
+
+
+
+
+
+  
+
+
+		
+			
+				
+		
+		
+		 
+		
+	
+		
+		
+		
+		
+	
+  
