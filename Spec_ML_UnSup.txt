@@ -1,0 +1,235 @@
+***WEEK 1***
+-UnSupervised Learning:
+	`Clustering
+	`Anomaly Detection
+-Recommendar Systems
+-Reinforcement Learning 
+Clustering:
+	-Finding similar data points and making cluster
+	Applications of Clustering:
+		- Grouping Similar news
+		- Market Segmentation
+		- DNA analysis
+		- Astronomical Data analysis
+	K-Means Algorithm
+		- Compress images
+		- Randomly pick two points
+		- Cluster Centroids
+		- check closer to red or blue
+		- Assign each point to its  closest centriod
+		- Recompute the centriods 
+		- again assign each point to its closest centriod
+		- but how many times ?
+			- we see that there is no change in the cluster centriods after taking mean then that point we will come to know that our clustering are done
+				- K-means Algo converge
+		Algorithm Steps:
+			- Randomly initialize K cluster centriods..mu1,mu2,mu3...muk
+			- Repeat {
+				#Assign points to cluster centroids
+				for i = 1 to ...m # m training examples
+					c(i) = index (from 1 to K) of cluster 
+						centroid closest to x(i)
+							c(i) <- mink || X(i) - mu(k) ||
+				#Move cluster centroids
+				for k = 1 to .. k
+					mu(k) = avg (mean) of points assign to cluster k
+			 }
+			- Eliminate that cluster if no point is assign to it 
+	-T-Shirt (S,M,L)
+		- find by using clustering K mean algorithm
+	- K-Means Optimization Objective:
+		- Cost Function:
+			- J (c(1)...c(m),mu1...mk) = 1/m (sumof ||X(i) - Xc(i)||^2)
+				min
+			- CF => constant means that K-means coverges
+			- CF => increasing with iteration means that code have some bugs
+	Initializing K-means:
+		- Choose K < m ( clusters smaller then examples ofc)]
+		- Randomly pick K training examples
+		- Set mu1.........muk equal to these K examples
+		- Random Iniliaization:
+			for i......100 :
+				Randomly initialize K-means ( k examples )
+				Run K- means. Get c(1)...c(m), mu1.........muk
+				compute cost function (distortion)
+				J (c1,c.........c(m), mu1.........muk) 
+			}
+			- Pick set of clusters that gave the lowest Cost J
+	- Choosing number of Clusters:
+		- Elbow method
+			- if cost function decreasing and at the point where cost function is decreasing very less with increasing the K means then that number of cluster we pick
+			- Don't choose K just to minimize the cost function
+		- Often, we get clusters for some later purpose
+		- Evaluate K-means based on how well it performs on that later purpose
+Anomaly Detection:
+Density Estimation:
+	Model p(X)
+		Is Xtest anamalous ?
+			if  P (Xtext) < e => then probabiity is very small which is unlikely 
+			else okay (normal)
+	Fraud Detection:
+		- X(i) => features of user i's activities:
+		- Model p(x) from data
+		- Identify unsual users by checking which have p(x) < e
+	Gaussian (normal) distribution:
+		Parameters Estimation:
+			mu  = mean
+			variance formula ofc
+	Anomaly Detection Algorithm:
+		Training set = { X(1).........X(n) }
+		Each X(i) has n features
+		P(x)  = p (x1; mu1, sigma1^2   ) * p(x2; mu2, sigma2^2   ) * p (xn; mun, sigman^2     )
+		Developing and evaluating an anomaly detection system:
+			Training set:
+			Cross validations:
+			Test:
+		Alternative: No Test set	use if very few labeled anomalous examples 
+		Training set: 6000 good engines
+		CV: ....
+		y = { 1 if p(x) < E (anomaly); 0 if (x) > E }
+		If you saw those optional videos, you may recall that we saw it can be useful to compute things like the true positive, false positive, false negative, 
+		and true negative rates. Also compute precision recall or F_1 score and that these are alternative metrics and classification accuracy that could work 
+		better when your data distribution is very skewed. If you saw that video, you might consider applying those types of evaluation metrics as well to tell 
+		how well your learning algorithm is doing at finding that small handful of anomalies or positive examples amidst this much larger set of negative examples
+		of normal plane engines.
+	Anomaly detection vs. supervised learning:
+		Fraud(new)	email spam (past learned)
+	Choosing what features to use:
+		Non-Gaussian Features:
+			using log (x + c) to make it gaussian# add c compulsory and very smalll
+			or taking square root
+	Error Analysis Process For Anomaly Detection:
+		want	p(x) >= E large for normal examples x
+			P(x) < E small for anomalous examples x
+		Most Common problem:
+			p(x) is comparable for normal and anomalous examples.
+			(p(x) is large for both)	
+***WEEK 2***
+Making recommendations:
+	Predicting movie Ratings:
+		Using Per item features:
+			users > j; features > i
+			Predict rating for movie i as:  w(j). x^(i) + b(j)
+			w(1) = [5 0] => b(1) = 0  => x(3) = [0.99 0]
+		Cost Function:
+			w(j) . x^(i) + b(j)
+			m^(j) => no of movies rated by user j
+			formula:  J (w.b.x)1/2m(J) sumof (wj . xi + bj - yi,j )^2 + regularization term (prevent over fitting)
+					w = same as linear reg
+					b = same as linear reg
+					xk = same as b/w just change subsciprt as k 
+	Binary labels: favs, likes and clicks:
+		1 => yes (like)
+		0 => no (unlike)
+		? => not engaged
+		Loss for binary labels:
+			cost  = sumof ( loss (f(w,b,x) (x), y(i,j))
+Mean normalization:
+TensorFlow implementation:
+	-collaboriative filtering algorithm:
+		Question 1
+		Lecture described using ‘mean normalization’ to do feature scaling of the ratings. What equation below best describes this algorithm?
+		norm(i,j)μi=y(i,j)−μi; where=1∑jr(i,j)∑j:r(i,j)=1y(i,j)
+Content-Based Filtering:
+	Content based filtering vs collaborative filtering 
+	CF: Recommend items to you based on ratings of users who gave similar ratings as you 
+	CBF: Recommend items to you based on features of user and item to find good match 
+		CBF:
+			-Dot product of Vu and Vm
+			Xo -> Users network 	Xm -> Vm Movie Network
+			Prediction: Xo . Vm
+			cost function:
+				j  = sumof (Vu(j) . Vm(i) - y(i,j))^2 + NN regularization term 
+			To find similar movies :
+				|| Vm(k) - Vm(i) || small 
+Recommending from a large catalogue:
+	Ranking:
+		- Take list retrieved and rank using learned model
+		- Display ranked items to user 
+	Retrieving more items results in better performance, but slower recommendations 
+Ethical use of recommender systems:
+	-Amelioration:
+		Filter out problematic content such as hate speech etc.
+TensorFlow implementation of content-based filtering:
+
+**WEEK NO 3**
+Reinforcement Learning:
+	- Reward function
+	- Applications:
+		- Controlling Robots
+		- Factory Optimization
+		- Financial (stock) trading
+		- Playing games (including video game)
+	- Mars rover example
+		(s, a, R(s), s')
+	The Return in reinforcement learning:
+		Discount Fact -> gamma = some value (e.g gamma = 0.5)
+	Making decisions: Policies in reinforcement learning:
+		- go to the side where reward is nearer && Larger award 	
+			-policy function tell what action to take to max the return 
+	-Review of key concepts
+		-states
+		-actions
+		-rewards
+		-discount factory gamma
+		-return
+		-policy pi
+	- MDP (Markov Decision Process)
+		- future only depend on where you're right now, not what you will take step
+	- State-action value function definition:
+	- Q(s,a) => Return if you:
+			- start in state s
+			- take action a (once)
+			- then behave optimally after that
+	- Bellman Equation:
+		............
+	-Example of continuous state space applications
+		-Discrete vs Continous State
+					for car = > s = [ x y Theta X' y' Theta' ]
+					for helicopter => Different as Z fi w added too
+	- Lunar lander:
+		- s = [ x y x' y' theta theta' L r ]
+		- Reward Function:
+	- Learning the state-value function:
+	- Algorithm refinement: Improved neural network architecture:
+			-Deep Reinforcement Learning:
+	-Algorithm refinement: ϵ-greedy policy:
+	-The state of reinforcement learning:
+		- Reinforcement learning is an exciting set of technologies. In fact, when I was working on my PhD thesis reinforcement learning was the subject of my thesis.
+		  So I was and still am excited about these ideas. Despite all the research momentum and excitement behind reinforcement learning though, I think there is a bit
+		  or maybe sometimes a lot of hype around it. So what I hope to do is share with you a practical sense of where reinforcement learning is today in terms of its 
+		  utility for applications. One of the reasons for some of the hype about reinforcement learning is, it turns out many of the research publications have been on 
+		  simulated environments. And having worked in both simulations and on real robots myself, I can tell you that it's much easier to get a reinforcement learning album 
+		  to work in a simulation or in a video game than in a real robot. So a lot of developers have commented that even after they got it to work in simulation, it turned
+		  out to be surprisingly challenging to get something to work in the real world or the real robot. And so if you apply these algorithms to a real application, this is
+		  one limitation that I hope you pay attention to to make sure what you do does work on the real application. Second, despite all the media coverage about reinforcement
+		  learning, today there are far fewer applications of reinforcement learning than supervised and unsupervised learning. So if you are building a practical application, the 
+		  odds that you will find supervised learning or unsupervised learning useful or the right tool for the job, is much higher than the odds that you would end up using 
+		  reinforcement learning. I have used reinforcement learning a few times myself especially on robotic control applications, but in my day to day applied work, 
+		
+
+
+
+
+
+			
+			
+			
+
+
+			
+	
+
+
+
+
+
+		
+
+
+
+
+
+			
+
+					
